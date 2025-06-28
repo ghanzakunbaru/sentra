@@ -1,27 +1,22 @@
 async function login() {
-  const user = document.getElementById("username").value.trim();
-  const pass = document.getElementById("password").value.trim();
-  const status = document.getElementById("status");
-
-  if (!user || !pass) {
-    return status.textContent = "⚠️ Lengkapi semua kolom!";
-  }
-
-  // Ganti URL ini ke RAW GitHub kamu
-  const dataURL = "https://raw.githubusercontent.com/ghanzakunbaru/sentra/main/users.json";";
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const error = document.getElementById('error');
 
   try {
-    const res = await fetch(dataURL);
-    const data = await res.json();
+    const res = await fetch('https://raw.githubusercontent.com/ghanzakunbaru/sentra/main/users.json');
+    const users = await res.json();
 
-    if (data[user] && data[user] === pass) {
-      // Simpan ke sessionStorage biar bisa akses dashboard
-      sessionStorage.setItem("user", user);
-      window.location.href = "dashboard.html";
+    const found = users.find(u => u.username === username && u.password === password);
+
+    if (found) {
+      localStorage.setItem('sentra_user', username);
+      window.location.href = 'dashboard.html';
     } else {
-      status.textContent = "❌ Username atau password salah!";
+      error.innerText = 'Username atau password salah';
     }
-  } catch (e) {
-    status.textContent = "⚠️ Gagal ambil data user!";
+  } catch (err) {
+    error.innerText = 'Gagal menghubungi server';
+    console.error(err);
   }
 }
