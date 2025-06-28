@@ -8,7 +8,7 @@ async function login() {
   }
 
   // Ganti URL ini ke RAW GitHub kamu
-  const dataURL = "https://raw.githubusercontent.com/ghanzakunbaru/payment/main/users.json";
+  const dataURL = "https://raw.githubusercontent.com/ghanzakunbaru/sentra/main/users.json";";
 
   try {
     const res = await fetch(dataURL);
