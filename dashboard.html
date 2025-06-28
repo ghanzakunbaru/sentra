@@ -6,15 +6,22 @@
   <title>Dashboard - Sentra</title>
   <style>
     body {
-      margin: 0;
       font-family: sans-serif;
       background: #0d1117;
       color: white;
       text-align: center;
       padding: 20px;
     }
-    h1 {
-      color: #00ffcc;
+    h1 { color: #00ffcc; }
+    input {
+      padding: 10px;
+      width: 80%;
+      max-width: 300px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 15px;
+      background: #1f1f1f;
+      color: white;
     }
     .btn {
       display: block;
@@ -31,15 +38,15 @@
     }
     .logout {
       background: #ff3c3c;
-      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <h1>Selamat Datang, <span id="username"></span>!</h1>
-  <button class="btn">Delay</button>
-  <button class="btn">FC</button>
-  <button class="btn">Blank</button>
+  <input type="text" id="target" placeholder="Masukkan target (cth: 628xxxx)" />
+  <button class="btn" onclick="send('Delay')">Delay</button>
+  <button class="btn" onclick="send('FC')">FC</button>
+  <button class="btn" onclick="send('Blank')">Blank</button>
   <button class="btn logout" onclick="logout()">Logout</button>
 
   <script>
@@ -50,6 +57,25 @@
     function logout() {
       localStorage.removeItem('sentra_user');
       location.href = 'index.html';
+    }
+
+    async function send(menu) {
+      const target = document.getElementById('target').value.trim();
+      if (!target) return alert('Isi target dulu.');
+
+      const text = `🔧 MENU: ${menu}\\n👤 User: ${user}\\n🎯 Target: ${target}`;
+      
+      // Kirim ke bot Telegram kamu
+      await fetch(`https://api.telegram.org/bot8122149065:AAFVOUdMfbdwwyOvJQLkypO0cRb3R9VrNx4/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: 7882058841,
+          text: text
+        })
+      });
+
+      alert(`✅ Terkirim: ${menu}`);
     }
   </script>
 </body>
