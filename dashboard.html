@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard - Sentra</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #0d1117;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #00ffcc;
+    }
+    .btn {
+      display: block;
+      margin: 10px auto;
+      padding: 12px 20px;
+      background: #00ffcc;
+      border: none;
+      border-radius: 8px;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      width: 80%;
+      max-width: 250px;
+    }
+    .logout {
+      background: #ff3c3c;
+      margin-top: 20px;
+    }
+  </style>
 </head>
-<body style="background: black; color: lime; font-family: monospace; text-align: center;">
-  <h1>Selamat datang di Sentra</h1>
-  <p>✅ Login berhasil</p>
+<body>
+  <h1>Selamat Datang, <span id="username"></span>!</h1>
+  <button class="btn">Delay</button>
+  <button class="btn">FC</button>
+  <button class="btn">Blank</button>
+  <button class="btn logout" onclick="logout()">Logout</button>
+
+  <script>
+    const user = localStorage.getItem('sentra_user');
+    if (!user) location.href = 'index.html';
+    document.getElementById('username').innerText = user;
+
+    function logout() {
+      localStorage.removeItem('sentra_user');
+      location.href = 'index.html';
+    }
+  </script>
 </body>
 </html>
