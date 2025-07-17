@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Informasi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="cekLogin()">
+  <h2>Seputar Informasi</h2>
+  <p>Selamat datang di Sentra! Ini adalah sistem panel otomatis untuk bug tools.</p>
+  <p>Untuk bantuan atau kendala, hubungi admin via Telegram.</p>
+  <a href="dashboard.html">⬅️ Kembali</a>
+
+  <script>
+    function cekLogin() {
+      if (localStorage.getItem("login") !== "true") {
+        window.location.href = "index.html";
+      }
+    }
+  </script>
+</body>
+</html>
