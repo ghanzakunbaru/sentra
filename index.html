@@ -2,18 +2,33 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Sentra</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="login-container">
     <h2>Login Sentra</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <div id="error"></div>
+    <input type="text" id="username" placeholder="Masukkan username">
+    <input type="password" id="password" placeholder="Masukkan password">
+    <button onclick="login()">Masuk</button>
   </div>
-  <script src="login.js"></script>
+
+  <script>
+    async function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+
+      // Data login dummy (bisa nanti diubah fetch dari GitHub JSON)
+      const data = [{username: "admin", password: "123"}];
+
+      const cek = data.find(u => u.username === user && u.password === pass);
+      if (cek) {
+        localStorage.setItem("login", "true");
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Login gagal!");
+      }
+    }
+  </script>
 </body>
 </html>
