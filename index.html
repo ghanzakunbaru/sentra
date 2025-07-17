@@ -1,37 +1,103 @@
-<script>
-  async function handleLogin(event) {
-    event.preventDefault();
-    
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    try {
-      const response = await fetch('users.js');
-      const scriptText = await response.text();
-
-      const usersData = scriptText.match(/const users = (\[.*?\]);/s);
-      if (!usersData) {
-        alert('Gagal mengambil data user.');
-        return;
-      }
-
-      const users = eval(usersData[1]);
-
-      const user = users.find(u => u.username === username && u.password === password);
-      if (user) {
-        // ✅ Login berhasil
-        const successMsg = document.getElementById('login-success');
-        successMsg.style.display = 'block';
-
-        setTimeout(() => {
-          window.location.href = 'dashboard.html';
-        }, 1500);
-      } else {
-        alert('Login gagal. Username atau password salah.');
-      }
-    } catch (error) {
-      console.error('Error saat login:', error);
-      alert('Terjadi kesalahan saat login.');
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Sentra</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
     }
-  }
-</script>
+
+    .login-box {
+      background: #1f1f1f;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      width: 300px;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      background: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background: #27ae60;
+    }
+
+    .status {
+      margin-top: 10px;
+      color: #00ff99;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Login Sentra</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required><br>
+      <input type="password" id="password" placeholder="Password" required><br>
+      <button type="submit">Masuk</button>
+    </form>
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const status = document.getElementById('status');
+
+      try {
+        const res = await fetch('users.json');
+        if (!res.ok) throw new Error("users.json tidak bisa diakses");
+        const users = await res.json();
+
+        const user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+          status.textContent = "Login berhasil! Mengalihkan...";
+          setTimeout(() => {
+            localStorage.setItem("sentra_login", "true");
+            window.location.href = "dashboard.html";
+          }, 1500);
+        } else {
+          status.textContent = "❌ Username atau password salah!";
+        }
+      } catch (err) {
+        status.textContent = "⚠️ Gagal memuat data pengguna.";
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
