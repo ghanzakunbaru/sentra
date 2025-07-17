@@ -1,36 +1,37 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sentra Login</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="login-container">
-    <h1>Login Sentra</h1>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Username" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
-    <p id="loginError" class="error"></p>
-  </div>  <script src="users.js"></script>  <script>
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
+<script>
+  async function handleLogin(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-      const user = users.find(
-        (u) => u.username === username && u.password === password
-      );
+    try {
+      const response = await fetch('users.js');
+      const scriptText = await response.text();
 
-      if (user) {
-        localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("username", username);
-        window.location.href = "dashboard.html";
-      } else {
-        document.getElementById("loginError").textContent = "Login gagal. Periksa kembali username dan password.";
+      const usersData = scriptText.match(/const users = (\[.*?\]);/s);
+      if (!usersData) {
+        alert('Gagal mengambil data user.');
+        return;
       }
-    });
-  </script></body>
-</html>
+
+      const users = eval(usersData[1]);
+
+      const user = users.find(u => u.username === username && u.password === password);
+      if (user) {
+        // ✅ Login berhasil
+        const successMsg = document.getElementById('login-success');
+        successMsg.style.display = 'block';
+
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1500);
+      } else {
+        alert('Login gagal. Username atau password salah.');
+      }
+    } catch (error) {
+      console.error('Error saat login:', error);
+      alert('Terjadi kesalahan saat login.');
+    }
+  }
+</script>
