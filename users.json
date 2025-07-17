@@ -1,38 +1,10 @@
-[
+const users = [
   {
-    "username": "ghanz",
-    "password": "88wzj7"
+    username: "ghanz",
+    password: "sentra123"
   },
   {
-    "username": "iqz",
-    "password": "yjrxvs"
-  },
-  {
-    "username": "yanto",
-    "password": "08ye8x"
-  },
-  {
-    "username": "masalah",
-    "password": "s3fnyx"
-  },
-  {
-    "username": "fazz",
-    "password": "ftmrsg"
-  },
-  {
-    "username": "Afik",
-    "password": "v6pcrs"
-  },
-  {
-    "username": "fael",
-    "password": "wl4i1r"
-  },
-  {
-    "username": "sandex",
-    "password": "nb3i99"
-  },
-  {
-    "username": "mark",
-    "password": "i1jj7f"
+    username: "admin",
+    password: "admin123"
   }
-]
+];
