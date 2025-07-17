@@ -1,45 +1,60 @@
 body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #0e0e0e;
+  font-family: sans-serif;
+  background: #111;
   color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-.login-container {
-  background: #1a1a1a;
+  text-align: center;
   padding: 20px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 350px;
-  box-shadow: 0 0 10px #00ffcc44;
 }
-input[type="text"], input[type="password"] {
-  width: 100%;
+
+input, select, button {
   padding: 10px;
-  margin-bottom: 15px;
+  margin: 5px;
+  width: 200px;
+  border-radius: 5px;
   border: none;
-  border-radius: 8px;
-  background: #2a2a2a;
-  color: white;
 }
+
 button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #00ffcc;
-  color: #000;
-  font-weight: bold;
+  background: #007bff;
+  color: white;
   cursor: pointer;
 }
+
 button:hover {
-  background: #00ddb0;
+  background: #0056b3;
 }
-#error {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
+
+.login-container {
+  margin-top: 100px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: #222;
+}
+
+.menu {
+  display: none;
+  flex-direction: column;
+  background: #333;
+  position: absolute;
+  right: 10px;
+  top: 50px;
+}
+
+.menu.active {
+  display: flex;
+}
+
+.menu a {
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.dashboard button {
+  margin: 10px;
+  width: 80%;
 }
