@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="cekLogin()">
+  <h2>Panel</h2>
+  <select id="paket">
+    <option value="1gb">1GB</option>
+    <option value="2gb">2GB</option>
+    <option value="3gb">3GB</option>
+    <option value="4gb">4GB</option>
+    <option value="5gb">5GB</option>
+    <option value="6gb">6GB</option>
+    <option value="7gb">7GB</option>
+    <option value="8gb">8GB</option>
+    <option value="9gb">9GB</option>
+    <option value="10gb">10GB</option>
+    <option value="unli">UNLI</option>
+  </select><br><br>
+  <input type="text" id="nama" placeholder="Masukkan nama panel"><br><br>
+  <button onclick="kirimPesan()">Kirim</button>
+
+  <script>
+    function cekLogin() {
+      if (localStorage.getItem("login") !== "true") {
+        window.location.href = "index.html";
+      }
+    }
+
+    function kirimPesan() {
+      const paket = document.getElementById("paket").value;
+      const nama = document.getElementById("nama").value;
+      const chatId = "7882058841"; // ID Telegram tujuan
+      const token = "TOKEN_BOT_KAMU"; // Ganti token bot kamu
+      const pesan = `/${paket} ${nama},${chatId}`;
+      
+      fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(pesan)}`)
+        .then(res => alert("Pesan terkirim ke Telegram!"))
+        .catch(err => alert("Gagal kirim pesan!"));
+    }
+  </script>
+</body>
+</html>
