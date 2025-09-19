@@ -1,14 +1,5 @@
 [
-  {
-    "username": "admin",
-    "password": "123456"
-  },
-  {
-    "username": "1",
-    "password": "1"
-  },
-  {
-    "username": "tester",
-    "password": "password123"
-  }
+  { "username": "admin", "password": "12345" },
+  { "username": "rull86", "password": "kontol" },
+  { "username": "vip", "password": "ganteng" }
 ]
