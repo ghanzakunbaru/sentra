@@ -1,4 +1,23 @@
 [
-  { "username": "admin", "password": "admin123", "role": "Admin", "isPremium": true, "expTime": 3600 },
-  { "username": "p",  "password": "p123",  "role": "User",  "isPremium": false, "expTime": 1000 }
+  {
+    "username": "admin",
+    "password": "123",
+    "role": "Admin",
+    "isPremium": true,
+    "expTime": 3600
+  },
+  {
+    "username": "mita",
+    "password": "pass",
+    "role": "User",
+    "isPremium": false,
+    "expTime": 0
+  },
+  {
+    "username": "user",
+    "password": "user123",
+    "role": "User",
+    "isPremium": false,
+    "expTime": 0
+  }
 ]
